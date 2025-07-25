@@ -126,8 +126,8 @@ def show_statistics(correct_answers, wrong_answers):
         print("⚠️ Жодного запитання не було пройдено.")
         return "exit"
 
-    correct_count = len(correct_answers)
-    wrong_count = len(wrong_answers)
+    correct_count = correct_answers
+    wrong_count = wrong_answers
     score_percent = round((correct_count / total) * 100, 2)
 
     print("\n📊 --- Статистика тесту ---")
