@@ -22,6 +22,7 @@ def quiz_mode(questions):
     wrong = 0
     random.shuffle(questions)
 
+    wrong_questions = []
     for q in questions:
         print("\n❓", q['question'])
         print(f"  A. {q['A']}")
@@ -37,13 +38,39 @@ def quiz_mode(questions):
         else:
             wrong += 1
             print(f"❌ Неправильно. Правильна відповідь: {q['correct'].upper()}")
-    show_statistics(correct, wrong)    
+            wrong_questions.append(q)
+    output = show_statistics(correct, wrong)   
+    while output == "retry":
+        correct = 0
+        total = len(questions)
+        wrong = 0
+        random.shuffle(questions)
+        for q in wrong_questions:
+            print("\n❓", q['question'])
+            print(f"  A. {q['A']}")
+            print(f"  B. {q['B']}")
+            print(f"  C. {q['C']}")
+            print(f"  D. {q['D']}")
+            answer = input("👉 Ваша відповідь (A/B/C/D), \nЯкщо хочете вийти напишіть q: ").strip().upper()
+        if answer == q['correct'].strip().upper():
+            print("✅ Правильно!")
+            correct += 1
+        elif answer == "Q":
+            break
+        else:
+            wrong += 1
+            print(f"❌ Неправильно. Правильна відповідь: {q['correct'].upper()}")
+            wrong_questions.append(q)
+        output = show_statistics(correct, wrong)
+
+
+        
 
 def main():
     print("🎉 Вітаємо у грі-квізі! 🎉")
     print("Ви отримаєте запитання з 4 варіантами відповідей. Оберіть правильну букву.")
     print("Готові? Починаємо!\n")
-    choice = input("Якщо хочете вибрати з створених тестів, напишіть A, якщо створити свій напишіть B")
+    choice = input("Якщо хочете вибрати з створених тестів, напишіть A, якщо створити свій напишіть B ")
     if choice == "B" or choice == "В":
         card, topic = add_card()
         write_card(card, topic)
